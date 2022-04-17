@@ -14,10 +14,10 @@ export class ProductAPIService {
   getProduct() {
     return this.http.get<any>(this.url);
   }
-  updateProduct(data: any, id: any) {
-    return this.http.patch<any>('http://localhost:8000/product' + id, data);
+  updateProduct(data: any, _id: any) {
+    return this.http.patch<any>('http://localhost:8000/product/' + _id, data);
   }
-  deleteProduct(id: any) {
-    return this.http.delete('http://localhost:8000/product' + id);
+  deleteProduct(_id: any) {
+    return this.http.delete('http://localhost:8000/product/' + _id);
   }
 }

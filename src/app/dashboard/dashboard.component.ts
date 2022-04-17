@@ -29,9 +29,16 @@ export class DashboardComponent implements OnInit {
   constructor(public dialog: MatDialog, private product: ProductAPIService) {}
 
   openDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '30%',
-    });
+    const dialogRef = this.dialog
+      .open(DialogComponent, {
+        width: '30%',
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        if (val == 'save') {
+          this.getAllProduct();
+        }
+      });
   }
   ngOnInit(): void {
     this.getAllProduct();
@@ -52,9 +59,27 @@ export class DashboardComponent implements OnInit {
   }
 
   editProduct(row: any) {
-    this.dialog.open(DialogComponent, {
-      width: '30%',
-      data: row,
+    this.dialog
+      .open(DialogComponent, {
+        width: '30%',
+        data: row,
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        if (val == 'update') {
+          this.getAllProduct();
+        }
+      });
+  }
+
+  deleteProduct(_id: any) {
+    this.product.deleteProduct(_id).subscribe({
+      next: (res) => {
+        alert('Product Deleted Successfully');
+      },
+      error: (err) => {
+        alert('Something Went Wrong');
+      },
     });
   }
   applyFilter(event: Event) {

@@ -62,9 +62,9 @@ export class DialogComponent implements OnInit {
   }
 
   updateProduct() {
-    alert(this.editData.id);
+    alert(this.editData._id);
     this.product
-      .updateProduct(this.addproduct.value, this.editData.id)
+      .updateProduct(this.addproduct.value, this.editData._id)
       .subscribe({
         next: (res) => {
           alert('Product Update successfully');
