@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { LoginComponent } from './login/login.component';
+import { TestResolver } from './service/test.resolver';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
@@ -21,7 +23,11 @@ const routes: Routes = [
   },
   {
     path:"dashboard",
-    component:DashboardComponent
+    component:DashboardComponent,
+    // canActivate: [AuthGuard],
+    resolve: {
+      productgetall :  TestResolver
+    }
   },
   {
     path:"**",

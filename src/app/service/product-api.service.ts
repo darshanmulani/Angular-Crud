@@ -12,7 +12,7 @@ export class ProductAPIService {
     return this.http.post<any>(this.url, data);
   }
   getProduct() {
-    return this.http.get<any>(this.url);
+    return this.http.get(this.url).toPromise();
   }
   updateProduct(data: any, _id: any) {
     return this.http.patch<any>('http://localhost:8000/product/' + _id, data);

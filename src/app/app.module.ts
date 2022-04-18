@@ -25,6 +25,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatPaginatorModule,
     MatSortModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

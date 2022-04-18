@@ -5,6 +5,7 @@ import { ProductAPIService } from '../service/product-api.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,7 +27,8 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(public dialog: MatDialog, private product: ProductAPIService) {}
+  constructor(public dialog: MatDialog, private product: ProductAPIService, private router: Router, 
+    private route:ActivatedRoute) {}
 
   openDialog() {
     const dialogRef = this.dialog
@@ -41,21 +43,26 @@ export class DashboardComponent implements OnInit {
       });
   }
   ngOnInit(): void {
-    this.getAllProduct();
+    this.dataSource = new MatTableDataSource(this.route.snapshot.data.productgetall)
+    this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    // console.log("asdasdas",test);
+    
+    // this.getAllProduct();
   }
 
   getAllProduct() {
-    this.product.getProduct().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (err) => {
-        alert('Something went wrong!');
-      },
-    });
+    // this.product.getProduct().subscribe({
+    //   next: (res) => {
+    //     console.log(res);
+    //     this.dataSource = new MatTableDataSource(res);
+    //     this.dataSource.paginator = this.paginator;
+    //     this.dataSource.sort = this.sort;
+    //   },
+    //   error: (err) => {
+    //     alert('Something went wrong!');
+    //   },
+    // });
   }
 
   editProduct(row: any) {
@@ -76,6 +83,7 @@ export class DashboardComponent implements OnInit {
     this.product.deleteProduct(_id).subscribe({
       next: (res) => {
         alert('Product Deleted Successfully');
+        this.getAllProduct()
       },
       error: (err) => {
         alert('Something Went Wrong');
@@ -89,5 +97,9 @@ export class DashboardComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  logout(){
+    localStorage.clear()
+    this.router.navigateByUrl("login")
   }
 }

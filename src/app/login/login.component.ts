@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
         );
       });
       if (user) {
+        localStorage.setItem('loginUser',"true")
         this.loginform.reset();
         this.router.navigate(['dashboard']);
       } else {
